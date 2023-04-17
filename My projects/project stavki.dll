@@ -7,4 +7,29 @@ def get_html(url):
     r = requests.get(url)
     return r.text
 
+def get_all_event_marathonbet(html):
+    all_players = []
+    all_K = []
+    soup = BeautifulSoup(html, 'lxml')
+    all_event = soup.find('div',
+    class_ = "sport-category-content").find_all('div',
+                                class_='bg coupon-row')
+    for players in all_event:
+        players = players['data-event-name'].\
+            replace('- ', '.').split('.')
+        player_1 = players[1].strip()
+        player_2 = players[3].strip()
+        all_players.append(player_1)
+        all_players.append(player_2)
+
+    for g in all_event:
+        K1 = g.find('td',colspan="1").find('span',
+        class_="selection-link active-selection").text
+        K2 = g.find('td', colspan="1").find('span',
+        class_="selection-link active-selection").\
+            findNext('span').text
+        all_K.append(K1)
+        all_K.append(K2)
+
+    return all_players, all_K
 
