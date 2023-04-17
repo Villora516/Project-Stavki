@@ -3,4 +3,8 @@ from bs4 import BeautifulSoup
 from fuzzy_sequence_matcher import SequenceMatcher
 from collections import defaultdict
 
+def get_html(url):
+    r = requests.get(url)
+    return r.text
+
 
